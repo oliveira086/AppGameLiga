@@ -33,11 +33,13 @@ const styles = StyleSheet.create({
         color: '#FAF8F8'
     },
     buttonContainerBottom: {
+        flexDirection: 'column',
         width: '20%',
         height: '60%',
         borderRadius: 10,
-        backgroundColor: '#ECECEC',
-        opacity: 0.6
+        justifyContent:'center',
+        alignItems: 'center',
+        backgroundColor: '#7B868E',
     },
     containerCarteira: {
         width: '100%',
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 2
     },
-    bottomTransferirCarteira: {
+    buttomTransferirCarteira: {
         flexDirection: 'column',
         width: '28%',
         height: '80%',
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 12
     },
-    bottomNovaAtividadeCarteira: {
+    buttomNovaAtividadeCarteira: {
         flexDirection: 'column',
         width: '28%',
         height: '80%',
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginLeft: 12
     },
-    bottomMinhaCarteira: {
+    buttomMinhaCarteira: {
         flexDirection: 'column',
         width: '28%',
         height: '80%',

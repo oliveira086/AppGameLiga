@@ -7,6 +7,7 @@ import {
   import Login from './screens/login/index'
   import Cadastro from './screens/cadastro/index'
   import Home from './screens/home/index'
+  import Estados from './screens/estados/index'
   
   const RootStack = createStackNavigator({
   
@@ -27,7 +28,13 @@ import {
       navigationOptions: {
           headerShown: false,
       }
-  }
+  },
+  Estados: {
+    screen: Estados,
+    navigationOptions: {
+        headerShown: false,
+    }
+}
   
   });
   
