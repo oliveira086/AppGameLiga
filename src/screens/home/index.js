@@ -13,23 +13,34 @@ class Home extends React.Component{
         this.state = {
             nome: 'usuario',
             saldo: 'P$ 0.00',
-            super_user: ''
+            super_user: '',
+            atividades: []
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         let token = {token: store.getState().auth.token}
-        axios.post('/users/getUser', token).then( res => {
+        await axios.post('/users/getUser', token).then( res => {
             this.setState({
                 nome: res.data.nome,
                 saldo: `P$ ${res.data.saldo}.00`,
                 super_user: res.data.super_user
             })
         })
+
+        await axios.post('/getAtividades', token).then( res => {
+            console.log(res.data)
+        })
+
+        
     }
 
     estados = () => {
         this.props.navigation.navigate('Estados')
+    }
+
+    adicionarNovaAtividade = () => {
+        this.props.navigation.navigate('AdicionarAtividade')
     }
 
     render(){
@@ -88,7 +99,7 @@ class Home extends React.Component{
                                 <TouchableOpacity style={styles.buttomTransferirCarteira}>
                                     <Text style={{color: '#FAF8F8'}}>Transferir</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.buttomNovaAtividadeCarteira}>
+                                <TouchableOpacity style={styles.buttomNovaAtividadeCarteira} onPress={() => this.adicionarNovaAtividade()}>
                                     <Text style={{color: '#FAF8F8'}}>Nova Atividade</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.buttomMinhaCarteira}>
