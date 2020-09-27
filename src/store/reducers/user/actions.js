@@ -1,14 +1,21 @@
 export const Nome = (nome) => {
     return {
-      type: '@auth/Nome',
+      type: '@user/Nome',
       payload: { nome }
     }
   }
   
 export const Saldo = (saldo) => {
   return {
-    type: '@auth/Saldo',
+    type: '@user/Saldo',
     payload: { saldo }
+  }
+}
+
+export const Atividade = (atividade) => {
+  return {
+    type: '@user/Atividade',
+    payload: { atividade }
   }
 }
   

@@ -51,7 +51,6 @@ class Home extends React.Component{
     }
 
     itemSelecionado(item) {
-        console.log(item)
         this.setState({estado_id: item})
     }
     dataSelecionda(item){
@@ -117,7 +116,7 @@ class Home extends React.Component{
                     
                     
                     <Picker
-                        selectedValue={this.state.estado}
+                        selectedValue={this.state.estado_id}
                         style={styles.picker}
                         onValueChange={(itemValue, itemIndex) => this.itemSelecionado(itemValue)}
                     >   

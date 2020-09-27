@@ -9,6 +9,8 @@ import Cadastro from './screens/cadastro/index'
 import Home from './screens/home/index'
 import Estados from './screens/estados/index'
 import AdicionarAtividade from './screens/adicionarAtividade/index'
+import NovaAtividade from './screens/novaAtividade/index'
+import AssinarAtividade from './screens/AssinarAtividade/index';
   
 const RootStack = createStackNavigator({
   
@@ -41,7 +43,19 @@ AdicionarAtividade: {
   navigationOptions: {
     headerShown: false
   }
-}
+},
+Atividade: {
+  screen: NovaAtividade,
+  navigationOptions: {
+    headerShown: false
+  }
+},
+AssinarAtividade: {
+  screen: AssinarAtividade,
+  navigationOptions: {
+    headerShown: false
+  }
+},
   
 });
   
