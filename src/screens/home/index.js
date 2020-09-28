@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { SafeAreaView, Text, View, TouchableOpacity, Image} from 'react-native'
+import { Saldo } from '../../store/reducers/user/actions'
 
 import Carousel from 'react-native-snap-carousel';
 
@@ -23,16 +24,17 @@ class Home extends React.Component{
     }
 
     async componentDidMount() {
+        const {dispatch} = this.props
         let token = {token: store.getState().auth.token}
         await axios.post('/users/getUser', token).then( res => {
             this.setState({
                 nome: res.data.nome,
-                saldo: `P$ ${res.data.saldo}.00`,
+                saldo: `P$ ${res.data.saldo}.00`, 
                 super_user: res.data.super_user
             })
-        })
 
-        console.log(this.state.super_user)
+            dispatch(Saldo(res.data.saldo))
+        })
 
         await axios.post('/getAtividadesUser', token).then( res => {
             this.setState({ atividades: res.data})

@@ -12,6 +12,9 @@ import AdicionarAtividade from './screens/adicionarAtividade/index'
 import NovaAtividade from './screens/novaAtividade/index'
 import AssinarAtividade from './screens/AssinarAtividade/index';
 import Transferencias from './screens/transferencias/index'
+import NovoContato from './screens/novoContato/index'
+import ValorTransferir from './screens/valorTransferencia/index'
+import ConfirmarSenha from './screens/confirmarSenha/index'
   
 const RootStack = createStackNavigator({
   
@@ -59,6 +62,24 @@ AssinarAtividade: {
 },
 Transferencias: {
   screen: Transferencias,
+  navigationOptions: {
+    headerShown: false
+  }
+},
+NovoContato: {
+  screen: NovoContato,
+  navigationOptions: {
+    headerShown: false
+  }
+},
+ValorTransferir: {
+  screen: ValorTransferir,
+  navigationOptions: {
+    headerShown: false
+  }
+},
+ConfirmarSenha: {
+  screen: ConfirmarSenha,
   navigationOptions: {
     headerShown: false
   }

@@ -28,7 +28,7 @@ class Cadastro extends React.Component{
     render(){
         return(
             <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.containerGeral}>
+            behavior={Platform.OS == "ios" ? "padding" : "none"} style={styles.containerGeral}>
                 <Image source={require('../../assets/logo.png')} style={styles.logo}></Image>
                 <View style={styles.containerInferior}>
                     <TextInput 

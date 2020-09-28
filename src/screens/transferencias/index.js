@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { SafeAreaView, Text, View, TouchableOpacity, Image, FlatList} from 'react-native'
+import { SafeAreaView, Text, View, TouchableOpacity, ScrollView, FlatList} from 'react-native'
 
 import { store } from '../../store'
 import axios from '../../services/api';
@@ -34,18 +34,19 @@ class Transferencias extends React.Component{
             <SafeAreaView style={styles.containerGeral}>
                 <View style={styles.containerSuperior}>
                     <Text style={{fontSize: 32, color:"#FAF8F8"}}>Transferencias</Text>
-                    <TouchableOpacity style={styles.buttonNovoContato}>
-                        <Text>Novo contato</Text>
+                    <TouchableOpacity style={styles.buttonNovoContato} onPress={() => this.props.navigation.navigate('NovoContato')}>
+                        <Text style={{fontSize: 16, color:"#FAF8F8", fontWeight: 'bold'}}>Novo contato</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.containerMiddle}>
-                    <FlatList
-                        data={this.state.contatos}
-                        keyExtractor={(item) => item.id}
-                        renderItem={this.renderItem}
-                        showsVerticalScrollIndicator={false}
-                        style={{width: '80%'}}>
-                    </FlatList>
+                    <ScrollView style={{width: '90%', height: '100%'}}>
+                        {this.state.contatos.map(x => {
+                            return<TouchableOpacity style={styles.containerContato}>
+                                <Text style={{color:'#00183C', fontSize: 18, fontWeight: 'bold'}}>{x.usuario_agenda_id.nome}</Text>
+                            </TouchableOpacity> 
+                        })}
+
+                    </ScrollView>
                 </View>
 
             </SafeAreaView>

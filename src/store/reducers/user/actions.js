@@ -18,4 +18,18 @@ export const Atividade = (atividade) => {
     payload: { atividade }
   }
 }
+
+export const UserTransferencia = (userTransferencia) => {
+  return {
+    type: '@user/UserTransferencia',
+    payload: { userTransferencia }
+  }
+}
+
+export const ValorTransferencia = (valorTransferencia) => {
+  return {
+    type: '@user/ValorTransferencia',
+    payload: {valorTransferencia}
+  }
+}
   

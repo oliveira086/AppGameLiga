@@ -18,36 +18,33 @@ const styles = StyleSheet.create({
     containerMiddle: {
         width: '100%',
         height: '50%',
-        padding: 10,
-        backgroundColor: '#FAF8F8',
-        borderBottomRightRadius: 30,
-        borderTopLeftRadius: 30,
-        justifyContent:'center',
+        justifyContent:'space-around',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 2,
-            height: 2
-        },
-        shadowOpacity: 0.6,
-        shadowRadius: 10,
     },
-    buttonNovoContato: {
+    buttonConfirmar: {
         width: '60%',
-        height: '30%',
+        height: '15%',
         backgroundColor: '#FBC531',
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    containerContato: {
-        width: '100%',
-        backgroundColor: '#ECECEC',
+    containerInput: {
+        width: '90%',
+        height: '20%',
         borderRadius: 10,
-        padding: 10,
+        alignItems: 'center',
+        justifyContent:'center',
+        backgroundColor:'#FAF8F8'
+    },
+    input:{
+        width: '100%',
+        height: '100%',
         justifyContent:'center',
         alignItems: 'center',
-        marginBottom: 10
+        textAlign: 'center',
+        fontSize: 60,
+        color: '#00183C'
     }
 })
 

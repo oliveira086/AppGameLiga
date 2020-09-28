@@ -1,7 +1,9 @@
 const INITIAL_STATE = {
     nome: '',
     saldo: '',
-    atividade: ''
+    atividade: '',
+    usuarioTransferencia: '',
+    valorTransferencia: ''
 }
   
 const user = (state = INITIAL_STATE, action) => {
@@ -27,6 +29,17 @@ const user = (state = INITIAL_STATE, action) => {
                 atividade: action.payload.atividade
             }
             break
+        case `${baseAction}UserTransferencia`:
+            return {
+                ...state,
+                usuarioTransferencia: action.payload.userTransferencia
+            }
+            break
+        case `${baseAction}ValorTransferencia`:
+            return {
+                ...state,
+                valorTransferencia: action.payload.valorTransferencia
+            }
         }
   }
   
