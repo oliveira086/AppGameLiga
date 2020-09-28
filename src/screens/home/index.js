@@ -91,7 +91,7 @@ class Home extends React.Component{
 
                             </View>
                             <View style={styles.containerCarteiraBottom}>
-                                <TouchableOpacity style={styles.buttomTransferirCarteira}>
+                                <TouchableOpacity style={styles.buttomTransferirCarteira} onPress={() => this.props.navigation.navigate('Transferencias')}>
                                     <Text style={{color: '#FAF8F8'}}>Transferir</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.buttomNovaAtividadeCarteira} onPress={() => this.novaAtividade()}>

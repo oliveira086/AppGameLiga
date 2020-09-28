@@ -11,6 +11,7 @@ import Estados from './screens/estados/index'
 import AdicionarAtividade from './screens/adicionarAtividade/index'
 import NovaAtividade from './screens/novaAtividade/index'
 import AssinarAtividade from './screens/AssinarAtividade/index';
+import Transferencias from './screens/transferencias/index'
   
 const RootStack = createStackNavigator({
   
@@ -52,6 +53,12 @@ Atividade: {
 },
 AssinarAtividade: {
   screen: AssinarAtividade,
+  navigationOptions: {
+    headerShown: false
+  }
+},
+Transferencias: {
+  screen: Transferencias,
   navigationOptions: {
     headerShown: false
   }

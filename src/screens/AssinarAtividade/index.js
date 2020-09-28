@@ -20,8 +20,10 @@ class Home extends React.Component{
             valor_inicio: '',
             valor_final: '',
             entrega: '',
-            id_trello: '',
-            id:''
+            users_id:'',
+            id_trello_atividade: '',
+            id_trello_users: '',
+            id_atividade: ''
         }
     }
 
@@ -46,28 +48,33 @@ class Home extends React.Component{
             valor: data.valor,
             valor_inicio: data.valor_inicio,
             valor_final: data.valor_final,
-            entrega: entrega
+            entrega: entrega,
+            id_trello_atividade: data.trello_id,
+            id_atividade: data.id
         })
 
         let token = {token:store.getState().auth.token}
         axios.post('/users/getUser', token).then(res => {
-            this.setState({id: res.data.id, id_trello: res.data.id_trello})
+            this.setState({users_id: res.data.id, id_trello_users: res.data.id_trello})
         })
     }
 
     confirmarInscricao = async () => {
         let data = {
             token: store.getState().auth.token,
+            id_atividade: this.state.id_atividade,
             nome: this.state.nomeAtividade,
             valor: this.state.valor,
             valor_inicio: this.state.valor_inicio,
             valor_final: this.state.valor_final,
             entrega: store.getState().user.atividade.entrega,
-            id: this.state.id,
-            id_trello: this.state.id_trello
+            id_trello_atividade: this.state.id_trello_atividade,
+            id_trello_users: this.state.id_trello_users,
+            users_id: this.state.users_id,
         }
+        
         await axios.post('/buyAtividade', data).then(res => {
-            console.log(res.data)
+            this.props.navigation.navigate('Home')
         })
     }
 
