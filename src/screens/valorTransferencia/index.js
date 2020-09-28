@@ -58,7 +58,7 @@ class TransferenciaValor extends React.Component{
                     <Text style={{fontSize: 22, color:"#FAF8F8"}}>{this.state.nome}</Text>
                 </View>
                 <View style={styles.containerMiddle}>
-                    {this.state.aviso ?
+                    {this.state.aviso ? 
                         <View style={styles.containerAviso}>
                             <Image source={require('../../assets/erro.png')} style={styles.erro}></Image>
                             <Text style={{fontSize: 20, color:"#FAF8F8"}}>Desculpe, tente novamente</Text>

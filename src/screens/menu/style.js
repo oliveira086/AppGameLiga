@@ -37,10 +37,9 @@ const styles = StyleSheet.create({
         width: '20%',
         height: '60%',
         borderRadius: 10,
-        justifyContent:'space-around',
-        alignItems: 'flex-start',
+        justifyContent:'center',
+        alignItems: 'center',
         backgroundColor: '#7B868E',
-        paddingLeft: 5
     },
     containerCarteira: {
         width: '100%',

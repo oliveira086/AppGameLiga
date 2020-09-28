@@ -15,6 +15,8 @@ import Transferencias from './screens/transferencias/index'
 import NovoContato from './screens/novoContato/index'
 import ValorTransferir from './screens/valorTransferencia/index'
 import ConfirmarSenha from './screens/confirmarSenha/index'
+import Menu from './screens/menu/index'
+import CadastrarSenha from './screens/cadastrarSenha/index'
   
 const RootStack = createStackNavigator({
   
@@ -80,6 +82,18 @@ ValorTransferir: {
 },
 ConfirmarSenha: {
   screen: ConfirmarSenha,
+  navigationOptions: {
+    headerShown: false
+  }
+},
+Menu: {
+  screen: Menu,
+  navigationOptions: {
+    headerShown: false
+  }
+},
+CadastrarSenha: {
+  screen: CadastrarSenha,
   navigationOptions: {
     headerShown: false
   }

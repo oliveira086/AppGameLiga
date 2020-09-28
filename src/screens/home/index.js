@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { SafeAreaView, Text, View, TouchableOpacity, Image} from 'react-native'
 import { Saldo } from '../../store/reducers/user/actions'
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import Carousel from 'react-native-snap-carousel';
 
 
@@ -83,7 +85,12 @@ class Home extends React.Component{
             return(
                 <SafeAreaView style={styles.containerGeral}>
                     <View style={styles.containerHeader}>
-                        <Text style={styles.textUser}>{this.state.nome}</Text>
+                        <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}
+                            onPress={() => this.props.navigation.navigate('Menu')}>
+                            <Text style={styles.textUser}>{this.state.nome}</Text>
+                            <Icon color="#FAF8F8" name="keyboard-arrow-down" size={30} />
+                        </TouchableOpacity>
+                        
                     </View>
                     <View style={styles.containerMiddle}>
                         <View style={styles.containerCarteira}>
@@ -105,7 +112,6 @@ class Home extends React.Component{
                             </View>
                         </View>
                         <View style={styles.containerTasks}>
-                            <Text>Ok</Text>
                             <View style={styles.containerScroll}>
                                 <Carousel
                                     ref={(c) => { this._carousel = c; }}
@@ -120,7 +126,9 @@ class Home extends React.Component{
 
                     </View>
                     <View style={styles.containerBottom}>
-                        <TouchableOpacity style={styles.buttonContainerBottom}>
+                        <TouchableOpacity style={styles.buttonContainerBottom} onPress={() => this.props.navigation.navigate('CadastrarSenha')}>
+                            <Icon color="#FAF8F8" name="lock" size={20} />
+                            <Text style={{color: '#FAF8F8', fontSize:12}}>Senha de confirmação</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonContainerBottom}></TouchableOpacity>
                         <TouchableOpacity style={styles.buttonContainerBottom}></TouchableOpacity>

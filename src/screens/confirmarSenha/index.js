@@ -47,6 +47,7 @@ class TransferenciaValor extends React.Component{
                         keyboardType={'number-pad'}
                         placeholderTextColor="#00183C"
                         secureTextEntry
+                        maxLength={4}
                         style={styles.input}></TextInput>
                     </View>
                     <TouchableOpacity style={styles.buttonConfirmar} onPress={() => this.consultar()}>
