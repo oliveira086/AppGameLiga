@@ -30,7 +30,7 @@ class Login extends React.Component{
             senha_confirmacao: this.state.cadastrarSenha
         }
         await axios.post('users/saveConfirmationPass', data).then(res => {
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('SenhaOk')
         }).catch(err => {
             this.setState({erro: true})
         })
@@ -43,7 +43,7 @@ class Login extends React.Component{
             newPass: this.state.novaSenha
         }
         await axios.post('users/updateConfirmationPass', data).then(res => {
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('SenhaOk')
         }).catch(err => {
             this.setState({erro: true})
         })
@@ -80,7 +80,6 @@ class Login extends React.Component{
                                 onChangeText={cadastrarSenha => this.setState({ cadastrarSenha })}
                                 placeholder={'****'}
                                 keyboardType={'number-pad'}
-                                placeholderTextColor="#00183C"
                                 secureTextEntry
                                 maxLength={4}
                                 style={styles.input}></TextInput>
@@ -118,7 +117,6 @@ class Login extends React.Component{
                                 onChangeText={senhaAntiga => this.setState({ senhaAntiga })}
                                 placeholder={'****'}
                                 keyboardType={'number-pad'}
-                                placeholderTextColor="#00183C"
                                 secureTextEntry
                                 maxLength={4}
                                 style={styles.input}></TextInput>
@@ -130,7 +128,6 @@ class Login extends React.Component{
                                 onChangeText={novaSenha => this.setState({ novaSenha })}
                                 placeholder={'****'}
                                 keyboardType={'number-pad'}
-                                placeholderTextColor="#00183C"
                                 secureTextEntry
                                 maxLength={4}
                                 style={styles.input}></TextInput>

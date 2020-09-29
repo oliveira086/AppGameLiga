@@ -1,13 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { SafeAreaView, Text, View, TouchableOpacity, Image} from 'react-native'
-import { Saldo } from '../../store/reducers/user/actions'
+import { Nome } from '../../store/reducers/user/actions'
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Carousel from 'react-native-snap-carousel';
-
-
 
 import { store } from '../../store'
 import axios from '../../services/api';
@@ -15,38 +13,38 @@ import axios from '../../services/api';
 import styles from './style'
 
 class Home extends React.Component{
+    
     constructor(props){
         super(props)
         this.state = {
             nome: 'usuario',
-            saldo: 'P$ 0.00',
+            saldo: `P$ ${JSON.stringify(this.props.navigation.getParam('saldo', 'NO-ID'))},00`,
             super_user: '',
             atividades: []
         }
     }
-
+    
+    async componentDidUpdate() {
+        let valorParamentro = this.props.navigation.getParam('saldo', 'NO-ID')
+        valorParamentro = JSON.stringify(valorParamentro)
+        this.setState({saldo: `P$ ${valorParamentro},00` })
+    }
     async componentDidMount() {
-        const {dispatch} = this.props
+        const { dispatch, navigation } = this.props
         let token = {token: store.getState().auth.token}
         await axios.post('/users/getUser', token).then( res => {
             this.setState({
                 nome: res.data.nome,
-                saldo: `P$ ${res.data.saldo}.00`, 
+                saldo: `P$ ${JSON.stringify(navigation.getParam('saldo', 'NO-ID'))},00`,
                 super_user: res.data.super_user
             })
-
-            dispatch(Saldo(res.data.saldo))
+            dispatch(Nome(this.state.nome))
         })
-
         await axios.post('/getAtividadesUser', token).then( res => {
             this.setState({ atividades: res.data})
         })
     }
-
-    estados = () => {
-        this.props.navigation.navigate('Estados')
-    }
-
+    
     adicionarNovaAtividade = () => {
         this.props.navigation.navigate('AdicionarAtividade')
     }
@@ -66,20 +64,20 @@ class Home extends React.Component{
     _renderItem = ({item, index}) => {
         return (
             <View style={styles.containerTask}>
-                <View style={styles.sombra}>
+                <TouchableOpacity style={styles.sombra}>
                     <View style={styles.taskSuperior}>
                         <Image source={require('../../assets/task.png')}></Image>
-                        <Text style={{color: '#000'}}>{ item.nome }</Text>
+                        <Text style={{color: '#000', fontWeight: '600'}}>{ item.nome }</Text>
                     </View>
                     <View style={styles.taskInferior}>
                         <Image source={require('../../assets/calendar.png')} style={styles.calendar}></Image>
-                        <Text>{this.converterData(item)}</Text>
+                        <Text style={{color: '#FAF8F8'}}>{this.converterData(item)}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
         );
     }
-
+    
     render(){
         if(this.state.super_user == 0){
             return(
@@ -163,7 +161,6 @@ class Home extends React.Component{
                             </View>
                         </View>
                         <View style={styles.containerTasks}>
-                            <Text>Ok</Text>
                             <View style={styles.containerScroll}>
                                 <Carousel
                                     ref={(c) => { this._carousel = c; }}
@@ -178,8 +175,7 @@ class Home extends React.Component{
 
                     </View>
                     <View style={styles.containerBottom}>
-                        <TouchableOpacity style={styles.buttonContainerBottom} onPress={() => this.estados()}>
-                            <Text style={{color: '#FAF8F8'}}>Estados</Text>
+                        <TouchableOpacity style={styles.buttonContainerBottom}>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonContainerBottom}></TouchableOpacity>
                         <TouchableOpacity style={styles.buttonContainerBottom}></TouchableOpacity>

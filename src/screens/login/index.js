@@ -3,28 +3,31 @@ import { connect } from 'react-redux';
 import { SafeAreaView, Text, Image, View, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 
 import { Auth } from '../../store/reducers/auth/actions';
+import { Saldo } from '../../store/reducers/user/actions';
 
 import axios from '../../services/api';
 
 import styles from './style';
+import { store } from '../../store';
 
 class Login extends React.Component{
     constructor(props){
         super(props)
         this.state = {
             email: 'andreluisoliveira013@gmail.com',
-            senha: 'asdf1234'
+            senha: 'asdf1234',
+            saldo: ''
         }
     }
 
-    login = async () => {
+    login = () => {
         const { dispatch } = this.props;
-        await axios.post('/login', this.state).then(response => {
+        axios.post('/login', this.state).then(response => {
+            this.setState({saldo: response.data.saldo})
             dispatch(Auth(response.data.token));
-            this.props.navigation.navigate('Home')
-        }).
-        catch(
-        )
+            dispatch(Saldo(response.data.saldo))
+            this.props.navigation.navigate('Home', {saldo: this.state.saldo})
+        })
     }
 
     cadastrar = () => {
@@ -34,7 +37,7 @@ class Login extends React.Component{
     render(){
         return(
             <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.containerGeral}>
+            behavior={Platform.OS == "ios" ? "padding" : "none"} style={styles.containerGeral}>
                 <Image source={require('../../assets/logo.png')} style={styles.logo}></Image>
                 <View style={styles.containerInferior}>
                     <TextInput 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { SafeAreaView, Text, View, TouchableOpacity, ScrollView, FlatList} from 'react-native'
+import { SafeAreaView, Text, View, TouchableOpacity, ScrollView, Image} from 'react-native'
 
 import { store } from '../../store'
 import axios from '../../services/api';
@@ -39,14 +39,21 @@ class Transferencias extends React.Component{
                     </TouchableOpacity>
                 </View>
                 <View style={styles.containerMiddle}>
+                    {this.state.contatos.length > 0 ?
                     <ScrollView style={{width: '90%', height: '100%'}}>
-                        {this.state.contatos.map(x => {
-                            return<TouchableOpacity style={styles.containerContato}>
-                                <Text style={{color:'#00183C', fontSize: 18, fontWeight: 'bold'}}>{x.usuario_agenda_id.nome}</Text>
-                            </TouchableOpacity> 
-                        })}
+                    {this.state.contatos.map(x => {
+                        return<TouchableOpacity style={styles.containerContato}>
+                            <Text style={{color:'#00183C', fontSize: 18, fontWeight: 'bold'}}>{x.usuario_agenda_id.nome}</Text>
+                        </TouchableOpacity> 
+                    })}
 
-                    </ScrollView>
+                </ScrollView>
+                : <View style={styles.containerSemTransferencia}>
+                    <Image source={require('../../assets/sem-transferencia.png')} style={styles.semTransferencia}></Image>
+                    <Text style={{color:'#00183C', fontSize: 18, fontWeight: 'bold'}}>Você ainda não possui transferencias</Text>
+
+                </View> }
+                    
                 </View>
 
             </SafeAreaView>

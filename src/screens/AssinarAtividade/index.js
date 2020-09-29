@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { SafeAreaView, Text, View, TouchableOpacity, Image} from 'react-native'
 
-import Carousel from 'react-native-snap-carousel';
-
 import { store } from '../../store'
 import axios from '../../services/api';
 
@@ -23,7 +21,9 @@ class Home extends React.Component{
             users_id:'',
             id_trello_atividade: '',
             id_trello_users: '',
-            id_atividade: ''
+            id_atividade: '',
+            saldo: '',
+            isSaldo: false
         }
     }
 
@@ -50,7 +50,8 @@ class Home extends React.Component{
             valor_final: data.valor_final,
             entrega: entrega,
             id_trello_atividade: data.trello_id,
-            id_atividade: data.id
+            id_atividade: data.id,
+            saldo: store.getState().user.saldo
         })
 
         let token = {token:store.getState().auth.token}
@@ -72,10 +73,20 @@ class Home extends React.Component{
             id_trello_users: this.state.id_trello_users,
             users_id: this.state.users_id,
         }
-        
-        await axios.post('/buyAtividade', data).then(res => {
-            this.props.navigation.navigate('Home')
-        })
+
+        const { dispatch } = this.props
+
+        dispatch(Atividade(data))
+
+        if(data.valor > this.state.saldo){
+            this.setState({isSaldo: true})
+        } else {
+            this.props.navigation.navigate('ConfirmarSenhaAtividade')
+        }
+    }
+
+    erroDimiss () {
+        this.setState({isSaldo: false})
     }
 
 
@@ -85,32 +96,45 @@ class Home extends React.Component{
                     <View style={styles.containerSuperior}>
                         <Text style={{fontSize: 32, color:"#FAF8F8", textAlign: 'center'}}>Confimar Inscrição na atividade?</Text>
                     </View>
-                    <View style={styles.containerMiddle}>
-                        <Image source={require('../../assets/taskdois.png')}></Image>
-                        <View style={styles.containerTextAtividade}>
-                            <Text style={styles.textAtividade}>Nome: {this.state.nomeAtividade}</Text>
+
+                    {this.state.isSaldo ?
+                    <View style={styles.containerSemSaldo}>
+                        <Image style={styles.ilustrationSemSaldo} source={require('../../assets/sem-extrato.png')}></Image>
+                        <Text style={{fontSize: 18, fontWeight: 'bold'}}>Seu saldo não e suficiente</Text>
+                            <TouchableOpacity style={styles.buttonSemSaldo} onPress={() => this.erroDimiss()}>
+                                <Text style={{color: '#FAF8F8', fontWeight: '600'}}>Entendi</Text>
+                            </TouchableOpacity>
+                    </View> :
+                        <View style={styles.containerBuy}>
+                            <View style={styles.containerMiddle}>
+                                <Image source={require('../../assets/taskdois.png')} style={styles.icon}></Image>
+                                <View style={styles.containerTextAtividade}>
+                                    <Text style={styles.textAtividade}>Nome: {this.state.nomeAtividade}</Text>
+                                </View>
+                                <View style={styles.containerTextAtividade}>
+                                    <Text style={styles.textAtividade}>Valor: P$ {this.state.valor}.00</Text>
+                                </View>
+                                <View style={styles.containerTextAtividade}>
+                                    <Text style={styles.textAtividade}>Valor da inscrição: P$ {this.state.valor_inicio}.00</Text>
+                                </View>
+                                <View style={styles.containerTextAtividade}>
+                                    <Text style={styles.textAtividade}>Valor da entrega: P$ {this.state.valor_final}.00</Text>
+                                </View>
+                                <View style={styles.containerTextAtividade}>
+                                    <Text style={styles.textAtividade}>Prazo da entrega: {this.state.entrega}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.containerInferior}>
+                                <TouchableOpacity style={styles.buttonInscricao} onPress={() => this.confirmarInscricao()}>
+                                    <Text style={{color: '#FAF8F8', fontWeight: '600'}}>Confirmar</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.voltar()}>
+                                    <Text style={{color: '#FAF8F8', fontWeight: '600'}}>Voltar</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={styles.containerTextAtividade}>
-                            <Text style={styles.textAtividade}>Valor: P$ {this.state.valor}.00</Text>
-                        </View>
-                        <View style={styles.containerTextAtividade}>
-                            <Text style={styles.textAtividade}>Valor da inscrição: P$ {this.state.valor_inicio}.00</Text>
-                        </View>
-                        <View style={styles.containerTextAtividade}>
-                            <Text style={styles.textAtividade}>Valor da entrega: P$ {this.state.valor_final}.00</Text>
-                        </View>
-                        <View style={styles.containerTextAtividade}>
-                            <Text style={styles.textAtividade}>Prazo da entrega: {this.state.entrega}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.containerInferior}>
-                        <TouchableOpacity style={styles.buttonInscricao} onPress={() => this.confirmarInscricao()}>
-                            <Text style={{color: '#FAF8F8', fontWeight: '600'}}>Confirmar</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.voltar()}>
-                            <Text style={{color: '#FAF8F8', fontWeight: '600'}}>Voltar</Text>
-                        </TouchableOpacity>
-                    </View>
+                    }
+                    
                     
                 </SafeAreaView>
             )

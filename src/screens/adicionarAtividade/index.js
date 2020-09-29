@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Picker } from 'react-native'
+import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView }from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { store } from '../../store'
 import axios from '../../services/api';
@@ -15,23 +15,8 @@ class Home extends React.Component{
             valor: '',
             valor_inicio: '',
             valor_final: '',
-            estado_id: '',
-            estados:[],
             entrega: new Date()
         }
-    }
-
-    componentDidMount(){
-        this.getEstados()
-    }
-
-    getEstados = async () => {
-        let token = {token: store.getState().auth.token}
-        await axios.post('/getEstados', token ).then(response => {
-            this.setState({estados: response.data, estado_id: response.data[0].id})
-        }).
-        catch(
-        )
     }
 
     cadastrarAtividade = async () => {
@@ -41,7 +26,6 @@ class Home extends React.Component{
             valor: this.state.valor,
             valor_inicio: this.state.valor_inicio,
             valor_final: this.state.valor_final,
-            estados_id: this.state.estado_id,
             entrega: this.state.entrega
         }
 
@@ -113,17 +97,6 @@ class Home extends React.Component{
                         style={styles.estiloInput}
                         value={this.state.valor_final}>
                     </TextInput>
-                    
-                    
-                    <Picker
-                        selectedValue={this.state.estado_id}
-                        style={styles.picker}
-                        onValueChange={(itemValue, itemIndex) => this.itemSelecionado(itemValue)}
-                    >   
-                        {this.state.estados.map((x) => {
-                            return <Picker.Item label={x.nome} value={x.id} />
-                        })}
-                    </Picker>
 
                     <TouchableOpacity style={styles.buttonCadastrar} onPress={() => this.cadastrarAtividade()}>
                         <Text style={{color: '#fff'}}>Cadastrar</Text>

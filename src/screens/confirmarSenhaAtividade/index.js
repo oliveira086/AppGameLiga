@@ -11,24 +11,39 @@ class ConfirmarSenha extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            senha: ''
+            token: '',
+            id_atividade: '',
+            valor: '',
+            valor_inicio: '',
+            valor_final: '',
+            entrega: '',
+            id_trello_atividade: '',
+            id_trello_users: '',
+            users_id: '',
+            senha_confirmacao: ''
         }
     }
 
     async componentDidMount() {
-        let nome = await store.getState().user.usuarioTransferencia.nome
-        this.setState({nome})
+        let atividade = await store.getState().user.atividade
+        this.setState({
+            token: store.getState().auth.token,
+            id_atividade: atividade.id_atividade,
+            valor: atividade.valor,
+            valor_inicio: atividade.valor_inicio,
+            valor_final: atividade.valor_final,
+            entrega: atividade.entrega,
+            id_trello_atividade: atividade.id_trello_atividade,
+            id_trello_users: atividade.id_trello_users,
+            users_id: atividade.users_id,
+        })
+
+        console.log(this.state)
     }
 
     async confirmarTransferencia() {
-        let data = {
-            token: store.getState().auth.token,
-            users_cred: store.getState().user.usuarioTransferencia.id,
-            senha_confirmacao: this.state.senha,
-            valor: store.getState().user.valorTransferencia
-        }
         
-        await axios.post('/sendTransferencia', data).then(res => {
+        await axios.post('/buyAtividade', this.state).then(res => {
             this.props.navigation.navigate('TransferenciaOk')
         })
     }
@@ -47,7 +62,7 @@ class ConfirmarSenha extends React.Component{
                     <View style={styles.containerInput}>
                         <TextInput
                         value={this.state.senha}
-                        onChangeText={senha => this.setState({ senha })}
+                        onChangeText={senha_confirmacao => this.setState({ senha_confirmacao })}
                         placeholder={'****'}
                         keyboardType={'number-pad'}
                         placeholderTextColor="#00183C"

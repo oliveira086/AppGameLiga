@@ -41,7 +41,7 @@ class TransferenciaValor extends React.Component{
         }
         if(this.state.valor !== '') {
             dispatch(ValorTransferencia(this.state.valor))
-            this.props.navigation.navigate('ConfirmarSenha')
+            this.props.navigation.navigate('ResumoTransferencia')
         }
 
     }

@@ -17,12 +17,23 @@ const styles = StyleSheet.create({
     },
     containerMiddle: {
         width: '100%',
-        height: '60%',
+        height: '70%',
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#FAF8F8',
         borderRadius: 10,
         padding: 5
+    },
+    containerBuy: {
+        width: '100%',
+        height: '80%',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    icon: {
+        width: '20%',
+        height: '30%',
+        resizeMode: 'contain'
     },
     containerInferior: {
         width: '100%',
@@ -46,6 +57,27 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         width: '40%',
         height: '40%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FBC531',
+        borderRadius: 10,
+    },
+    containerSemSaldo: {
+        width: '80%',
+        height: '50%',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#FAF8F8',
+        borderRadius: 10,
+    },
+    ilustrationSemSaldo: {
+        width: '50%',
+        height: '60%'
+    },
+    buttonSemSaldo: {
+        flexDirection: 'column',
+        width: '60%',
+        height: '15%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#FBC531',
