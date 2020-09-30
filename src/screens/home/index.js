@@ -20,7 +20,14 @@ class Home extends React.Component{
             nome: 'usuario',
             saldo: `P$ ${JSON.stringify(this.props.navigation.getParam('saldo', 'NO-ID'))},00`,
             super_user: '',
-            atividades: []
+            atividades: [],
+            todo: [],
+            ultimaTransferencia: [],
+            tipo: false,
+            usuarioCred: '',
+            usuarioDeb: '',
+            valor: '',
+            data: ''
         }
     }
     
@@ -43,6 +50,26 @@ class Home extends React.Component{
         await axios.post('/getAtividadesUser', token).then( res => {
             this.setState({ atividades: res.data})
         })
+
+        await axios.post('/getAtividadesTodo', token).then( res => {
+            this.setState({todo: res.data})
+        })
+
+        await axios.post('getLatest', token).then(res => {
+            let dateTime = res.data.data.createdAt
+            let parts = dateTime.split('T');
+            parts = parts[0].split('-')
+            let date = `${parts[2]}/${parts[1]}`
+
+
+            this.setState({
+                ultimaTransferencia: res.data.data,
+                usuarioCred: res.data.data.usuario_cred.nome,
+                usuarioDeb: res.data.data.usuario_deb.nome,
+                valor: res.data.data.valor,
+                data: date
+            })
+        })
     }
     
     adicionarNovaAtividade = () => {
@@ -61,10 +88,39 @@ class Home extends React.Component{
         return data
     }
 
+    async avancarAtividade (item) {
+        let data = {
+            token: store.getState().auth.token,
+            id_atividade: item.id
+        }
+
+        console.log(item)
+        await axios.post('changeList', data).then(res => {
+            console.log(res.data)
+        })  
+    }
+
     _renderItem = ({item, index}) => {
         return (
             <View style={styles.containerTask}>
                 <TouchableOpacity style={styles.sombra}>
+                    <View style={styles.taskSuperior}>
+                        <Image source={require('../../assets/task.png')}></Image>
+                        <Text style={{color: '#000', fontWeight: '600'}}>{ item.nome }</Text>
+                    </View>
+                    <View style={styles.taskInferior}>
+                        <Image source={require('../../assets/calendar.png')} style={styles.calendar}></Image>
+                        <Text style={{color: '#FAF8F8'}}>{this.converterData(item)}</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
+    _renderItemAdm = ({item, index}) => {
+        return (
+            <View style={styles.containerTask}>
+                <TouchableOpacity style={styles.sombra} onLongPress={() => this.avancarAtividade(item)}>
                     <View style={styles.taskSuperior}>
                         <Image source={require('../../assets/task.png')}></Image>
                         <Text style={{color: '#000', fontWeight: '600'}}>{ item.nome }</Text>
@@ -139,7 +195,11 @@ class Home extends React.Component{
             return(
                 <SafeAreaView style={styles.containerGeral}>
                     <View style={styles.containerHeader}>
-                        <Text style={styles.textUser}>{this.state.nome}</Text>
+                        <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}
+                            onPress={() => this.props.navigation.navigate('Menu')}>
+                            <Text style={styles.textUser}>{this.state.nome}</Text>
+                            <Icon color="#FAF8F8" name="keyboard-arrow-down" size={30} />
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.containerMiddle}>
                         <View style={styles.containerCarteira}>
@@ -149,7 +209,7 @@ class Home extends React.Component{
 
                             </View>
                             <View style={styles.containerCarteiraBottom}>
-                                <TouchableOpacity style={styles.buttomTransferirCarteira}>
+                                <TouchableOpacity style={styles.buttomTransferirCarteira} onPress={() => this.props.navigation.navigate('Transferencias')}>
                                     <Text style={{color: '#FAF8F8'}}>Transferir</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.buttomNovaAtividadeCarteira} onPress={() => this.adicionarNovaAtividade()}>
@@ -164,14 +224,48 @@ class Home extends React.Component{
                             <View style={styles.containerScroll}>
                                 <Carousel
                                     ref={(c) => { this._carousel = c; }}
-                                    data={this.state.atividades}
-                                    renderItem={this._renderItem}
+                                    data={this.state.todo}
+                                    renderItem={this._renderItemAdm}
                                     sliderWidth={500}
                                     itemWidth={150}
                                 />
                             </View>
                         </View>
-                        <View style={styles.containerExtrato}></View>
+
+                        {this.state.ultimaTransferencia ? 
+                            <View style={styles.containerExtrato}>
+                                <View style={styles.itemExtrato}>
+                                    <View style={styles.itemExtratoContainerIcone}>
+                                        <Icon color="#FBC531" name="call-received" size={30} />
+                                    </View>
+                                    <View style={styles.itemExtratoContainerMiddle}>
+                                        <Text style={{fontSize: 16,fontWeight:'bold', color: '#FBC531'}}>Transferência Realizada</Text>
+                                        <Text style={{fontSize: 16,fontWeight:'600', color: '#FBC531'}}>{this.state.usuarioCred}</Text>
+                                    </View>
+                                    <View style={styles.itemExtratoContainerData}>
+                                        <Text style={{fontSize: 16,fontWeight:'600', color: '#FBC531'}}>{this.state.data}</Text>
+                                        <Text style={{fontSize: 16,fontWeight:'600', color: '#FBC531'}}>P${this.state.valor},00</Text>
+                                    </View>
+                                </View>
+                            </View> :
+
+                            <View style={styles.containerExtrato}>
+                                <View style={styles.itemExtrato}>
+                                    <View style={styles.itemExtratoContainerIcone}>
+                                        <Icon color="#FBC531" name="call-made" size={30} />
+                                    </View>
+                                    <View style={styles.itemExtratoContainerMiddle}>
+                                        <Text style={{fontSize: 16,fontWeight:'bold', color: '#FBC531'}}>Transferência Recebida</Text>
+                                        <Text style={{fontSize: 16,fontWeight:'600', color: '#FBC531'}}>{this.state.usuarioDeb}</Text>
+                                    </View>
+                                    <View style={styles.itemExtratoContainerData}>
+                                        <Text style={{fontSize: 16,fontWeight:'600', color: '#FBC531'}}>{this.state.data}</Text>
+                                        <Text style={{fontSize: 16,fontWeight:'600', color: '#FBC531'}}>P${this.state.valor},00</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        }
+                        
 
                     </View>
                     <View style={styles.containerBottom}>

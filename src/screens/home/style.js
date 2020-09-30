@@ -95,7 +95,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.6,
         shadowRadius: 10,
         zIndex: 8,
-        marginTop: -45
+        marginTop: -45,
+        justifyContent: 'center',
+        alignItems:'center'
     },
     containerCarteiraTop: {
         width: '100%',
@@ -182,6 +184,31 @@ const styles = StyleSheet.create({
         width: '11%',
         height: '35%',
         marginRight: 10
+    },
+    itemExtrato: {
+        flexDirection: 'row',
+        width: '100%',
+        height: '80%',
+        justifyContent: 'center',
+        alignItems: 'flex-end'
+    },
+    itemExtratoContainerIcone: {
+        width: '15%',
+        height: '70%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    itemExtratoContainerMiddle: {
+        width: '65%',
+        height: '70%',
+        justifyContent: 'center',
+        alignItems: 'flex-start'
+    },
+    itemExtratoContainerData: {
+        width: '20%',
+        height: '70%',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 

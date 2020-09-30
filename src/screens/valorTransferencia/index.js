@@ -54,7 +54,7 @@ class TransferenciaValor extends React.Component{
             behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.containerGeral}>
                 <View style={styles.containerSuperior}>
                     <Text style={{fontSize: 32, color:"#FAF8F8"}}>Transferência</Text>
-                    <Text style={{fontSize: 22, color:"#FAF8F8"}}>Quanto você quer para</Text>
+                    <Text style={{fontSize: 22, color:"#FAF8F8"}}>Quanto você quer enviar para</Text>
                     <Text style={{fontSize: 22, color:"#FAF8F8"}}>{this.state.nome}</Text>
                 </View>
                 <View style={styles.containerMiddle}>
